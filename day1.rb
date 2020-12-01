@@ -6,13 +6,16 @@ is = File.read(file).lines.map {|i| Integer(i) }
 
 is.map do |i|
   is.map do |j|
-    [i, j]
+    next if i+j >= 2020
+    is.map do |k|
+      [i, j, k]
+    end
   end
 end
-.flatten(1)
-.filter do |i,j|
-  i + j == 2020 && i <= j
+.flatten(2)
+.filter do |i,j,k|
+  !(i.nil? || j.nil? || k.nil?) && i + j + k == 2020 && i <= j && j <= k
 end
-  .map do |i, j|
-  i*j
+  .map do |i, j, k|
+  i*j*k
 end.map {|p| puts p}
